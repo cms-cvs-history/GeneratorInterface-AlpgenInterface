@@ -1,5 +1,2 @@
- 
-
-
-#include "GeneratorInterface/CommonInterface/interface/txgive.F"
+#include "GeneratorInterface/CommonInterface/src/txgive.F"
 
