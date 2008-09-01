@@ -13,7 +13,7 @@ process = cms.Process("PROD")
 # Number of events.
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(100)
-)
+    )
 
 # MessageLogger control. Uncomment lines and fix commas to receive messages from FwkJob.
 process.MessageLogger = cms.Service("MessageLogger",
@@ -21,7 +21,7 @@ process.MessageLogger = cms.Service("MessageLogger",
                                     #categories = cms.untracked.vstring("FwkJob"),
                                     cout = cms.untracked.PSet(default = cms.untracked.PSet(limit = cms.untracked.int32(0))
                                                               #FwkJob = cms.untracked.PSet(limit = cms.untracked.int32(1))
-                                    )
+                                                              )
                                     #fwkJobReports = cms.untracked.vstring("FrameworkJobReport.xml")
                                     )
 
@@ -54,17 +54,17 @@ process.source = cms.Source("AlpgenSource",
                             )
 
 # This filters out empty (rejected by matching) events from the PoolOutputModule.
-filter = cms.EDFilter("AlpgenEmptyEventFilter")
+process.filter = cms.EDFilter("AlpgenEmptyEventFilter")
 
-p1 = cms.Path(filter)
+process.p1 = cms.Path(process.filter)
 
 ##########
 # Output #
 ##########
 
-GEN = cms.OutputModule("PoolOutputModule",
-                       fileName = cms.untracked.string("alpgen.root"),
-                       SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring("p1"))
-                       )
+process.GEN = cms.OutputModule("PoolOutputModule",
+                               fileName = cms.untracked.string("alpgen.root"),
+                               SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring("p1"))
+                               )
 
-e = cms.EndPath(GEN)
+process.e = cms.EndPath(process.GEN)
