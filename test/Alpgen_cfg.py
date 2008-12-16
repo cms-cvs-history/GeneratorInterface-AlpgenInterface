@@ -10,12 +10,18 @@ process = cms.Process("PROD")
 # Basic process controls. #
 ###########################
 
-# Number of events.
+# Number of events. If you ask for more events than the number available in the .unw file,
+# the AlpgenSource will quit after processing the last event in that file (i.e., will quit
+# early). Also note that the number of events "available" in the .unw file is NOT the total
+# number of events in that file - the matching efficiency has to be taken into account.
+# please check the documentation.
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100)
+    input = cms.untracked.int32(9999)
     )
 
-# MessageLogger control. Uncomment lines and fix commas to receive messages from FwkJob.
+# MessageLogger control. The standard MessageLogger configuration messes up the output,
+# because things are written to STDOUT from different places. The configuration below
+# fixes that, but gives a rather terse output. Configure as needed. 
 process.MessageLogger = cms.Service("MessageLogger",
                                     destinations = cms.untracked.vstring("cout"),
                                     #categories = cms.untracked.vstring("FwkJob"),
@@ -24,6 +30,8 @@ process.MessageLogger = cms.Service("MessageLogger",
                                                               )
                                     #fwkJobReports = cms.untracked.vstring("FrameworkJobReport.xml")
                                     )
+# In case you want the default MessageLogger, use this.
+#process.load("FWCore.MessageService.MessageLogger_cfi")
 
 # Random Number Generator Service
 process.RandomNumberGeneratorService = cms.Service("RandomNumberGeneratorService",
@@ -33,7 +41,8 @@ process.RandomNumberGeneratorService = cms.Service("RandomNumberGeneratorService
 # AlpgenSource #
 ################
 
-# The source file - here you put the unweighted file name without the .unw suffix.                                                   
+# The source file - here you put the unweighted file name without the .unw suffix.
+# BUT, don't forget the file: prefix.
 process.source = cms.Source("AlpgenSource",
                             fileNames = cms.untracked.vstring('file:alpgen'),
                             pythiaPylistVerbosity = cms.untracked.int32(0),
@@ -53,10 +62,10 @@ process.source = cms.Source("AlpgenSource",
                                                            )
                             )
 
-# This filters out empty (rejected by matching) events from the PoolOutputModule.
-process.filter = cms.EDFilter("AlpgenEmptyEventFilter")
-
-process.p1 = cms.Path(process.filter)
+# The output of a source is the HepMCProduct. If you want the more standard genParticles, uncomment the lines below.
+#process.load("SimGeneral.HepPDTESSource.pythiapdt_cfi")
+#process.load("PhysicsTools.HepMCCandAlgos.genParticles_cfi")
+#process.p1 = cms.Path(process.genParticles)
 
 ##########
 # Output #
@@ -64,7 +73,6 @@ process.p1 = cms.Path(process.filter)
 
 process.GEN = cms.OutputModule("PoolOutputModule",
                                fileName = cms.untracked.string("alpgen.root"),
-                               SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring("p1"))
                                )
 
 process.e = cms.EndPath(process.GEN)
