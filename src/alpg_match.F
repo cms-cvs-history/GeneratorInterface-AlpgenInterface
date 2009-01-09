@@ -101,7 +101,7 @@ C HEAVY QUARK MATCHING
       
 C DEBUGGING OPTIONS
       INTEGER IDBG
-      PARAMETER (IDBG=0)
+      PARAMETER (IDBG=1)
       DOUBLE PRECISION PTPART,PTJETS,ETAPART,ETAJETS
       INTEGER NMAX
       COMMON/MTCHDBG/PTPART(10),PTJETS(10),ETAPART(10),ETAJETS(10),NMAX
@@ -387,7 +387,7 @@ C     LOCAL VARIABLES
 C     USER ACCESS TO MATCHING PARAMETERS
       INTEGER IUSRMAT
       PARAMETER (IUSRMAT=1)
-      character*512                           CXpar
+      character*132                           CXpar
       integer         Ixpar 
       double precision            RXpar
       common /EXGPAR/ IXpar(100), RXpar(100), CXpar(100)
@@ -406,7 +406,7 @@ c      CHARACTER XXX*500, PROCESS*500
       IF (FIREVT.LT.1) THEN
         WRITE(*,*)'Warning: First event parameter in MY-INPARM.DAT file'
         WRITE(*,*)'         cannot be less than 1. So it was set to 1.'
-        FIREVT=1
+	FIREVT=1
       ENDIF
       CALL STRCATH(FILENAME,'-pyt.dat',TMPSTR)
       WRITE(*,*) 'NAME OF TXT FILE CONTAINING GENERATION PARAMETERS', 
@@ -481,8 +481,8 @@ C     HERWIG: HEPEVT EVENT RECORD FOR FINAL STATE STARTS AT 7=6+1
         NPLST=1
 C     PYTHIA: ALL SHOWERS ORIGINATE FROM IHEP=O
         IEND=0
-C     PYTHIA: HEPEVT EVENT RECORD FOR FINAL STATE STARTS AT 1=0+1
-        IHEPMIN=0
+C     PYTHIA: HEPEVT EVENT RECORD FOR FINAL STATE STARTS AT 7=6+1
+        IHEPMIN=6
         IDPRUP=661
       ENDIF
       IF(IHRD.LE.2) THEN
@@ -1799,9 +1799,6 @@ C-----------------------------------------------------------------------
       END
 
       SUBROUTINE ALSHEN
-C----------------------------------------------------------------------
-C     Subroutine called when an event is vetoed.
-C----------------------------------------------------------------------      
       END
 
       SUBROUTINE ALSHER(I)
