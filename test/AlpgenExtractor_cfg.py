@@ -21,13 +21,13 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 ##########
 
 process.source = cms.Source("PoolSource",
-                            fileNames = cms.untracked.vstring('file:w2j.root')
+                            fileNames = cms.untracked.vstring('file:alpgen.root')
                             )
 
 process.analyzer = cms.EDAnalyzer("AlpgenExtractor",
-                                  unwParFile = cms.untracked.string('w2j_unw.par'),
-                                  wgtFile = cms.untracked.string('w2j.wgt'),
-                                  parFile = cms.untracked.string('w2j.par')
+                                  unwParFile = cms.untracked.string('NEW_unw.par'),
+                                  wgtFile = cms.untracked.string('NEW.wgt'),
+                                  parFile = cms.untracked.string('NEW.par')
                                   )
 
 process.p = cms.Path(process.analyzer)
