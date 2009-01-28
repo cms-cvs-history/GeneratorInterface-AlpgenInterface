@@ -1,6 +1,7 @@
 <use name=boost>
 <use name=FWCore/Framework>
 <use name=FWCore/Sources>
+<use name=SimDataFormats/HepMCProduct>
 <use name=SimDataFormats/GeneratorProducts>
 <use name=GeneratorInterface/CommonInterface>
 <use name=clhep> 
@@ -15,6 +16,7 @@
  <use name=boost>
  <use name=FWCore/Framework>
  <use name=FWCore/Sources>
+ <use name=SimDataFormats/HepMCProduct>
  <use name=SimDataFormats/GeneratorProducts>
  <use name=GeneratorInterface/CommonInterface>
  <use name=clhep> 
