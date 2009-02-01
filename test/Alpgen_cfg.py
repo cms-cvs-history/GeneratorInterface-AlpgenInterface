@@ -14,9 +14,9 @@ process = cms.Process("PROD")
 # the AlpgenSource will quit after processing the last event in that file (i.e., will quit
 # early). Also note that the number of events "available" in the .unw file is NOT the total
 # number of events in that file - the matching efficiency has to be taken into account.
-# please check the documentation.
+# Please check the documentation.
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100)
+    input = cms.untracked.int32(9999)
     )
 
 # MessageLogger control. The standard MessageLogger configuration messes up the output,
@@ -44,7 +44,7 @@ process.RandomNumberGeneratorService = cms.Service("RandomNumberGeneratorService
 # The source file - here you put the unweighted file name without the .unw suffix.
 # BUT, don't forget the file: prefix.
 process.source = cms.Source("AlpgenSource",
-                            fileNames = cms.untracked.vstring('file:w2j'),
+                            fileNames = cms.untracked.vstring('file:alpgen'),
                             pythiaPylistVerbosity = cms.untracked.int32(0),
                             pythiaHepMCVerbosity = cms.untracked.bool(False),
                             PythiaParameters = cms.PSet(parameterSets = cms.vstring("pythia"),
@@ -72,7 +72,7 @@ process.source = cms.Source("AlpgenSource",
 ##########
 
 process.GEN = cms.OutputModule("PoolOutputModule",
-                               fileName = cms.untracked.string("w2j.root"),
+                               fileName = cms.untracked.string("alpgen.root"),
                                )
 
 process.e = cms.EndPath(process.GEN)
